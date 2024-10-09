@@ -10,23 +10,29 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
+      # Checkout code from the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Install Flutter
       - name: Install Flutter
         run: |
           git clone https://github.com/flutter/flutter.git -b stable --depth 1
-          export PATH="$PATH:`pwd`/flutter/bin"
+          echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
 
+      # Run Flutter clean to ensure a fresh build environment
       - name: Flutter clean
         run: flutter clean
 
+      # Install dependencies
       - name: Flutter packages get
         run: flutter pub get
 
+      # Build iOS app in release mode
       - name: Build iOS
         run: flutter build ios --release
 
+      # Upload the build artifacts (IPA file)
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
