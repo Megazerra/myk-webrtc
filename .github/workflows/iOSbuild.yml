@@ -28,6 +28,14 @@ jobs:
       - name: Flutter packages get
         run: flutter pub get
 
+      # Navigate to iOS folder and update CocoaPods repo
+      - name: Install CocoaPods dependencies
+        run: |
+          cd ios
+          pod repo update
+          pod update Firebase/Firestore
+          pod install --repo-update
+
       # Build iOS app in release mode
       - name: Build iOS
         run: flutter build ios --release
