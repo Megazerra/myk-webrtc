@@ -1,0 +1,51 @@
+name: Build iOS App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Flutter
+        run: |
+          git clone https://github.com/flutter/flutter.git -b stable --depth 1
+          echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
+
+      - name: Set up CocoaPods
+        run: |
+          sudo gem install cocoapods
+
+      - name: Get Flutter dependencies
+        run: |
+          flutter pub get
+
+      - name: Update iOS Deployment Target to 16.0 in Podfile
+        run: |
+          cd ios
+          # Update iOS deployment target to 16.0 in Podfile
+          sed -i '' 's/platform :ios, '\''[0-9]*'\''/platform :ios, '\''16.0'\''/g' Podfile
+
+      - name: Install CocoaPods dependencies
+        run: |
+          cd ios
+          pod repo remove trunk
+          pod install --repo-update
+
+      - name: Build iOS app
+        run: |
+          flutter build ios --release
+
+      # Upload the iOS build (IPA file) as an artifact
+      - name: Upload IPA file
+        uses: actions/upload-artifact@v3
+        with:
+          name: ios-build
+          path: build/ios/ipa/*.ipa
