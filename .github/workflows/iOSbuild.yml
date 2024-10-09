@@ -22,6 +22,10 @@ jobs:
       - name: Set up CocoaPods
         run: |
           sudo gem install cocoapods
+      
+      - name: Precache Flutter iOS artifacts
+        run: |
+          flutter precache --ios
 
       - name: Get Flutter dependencies
         run: |
