@@ -22,7 +22,7 @@ jobs:
       - name: Set up CocoaPods
         run: |
           sudo gem install cocoapods
-      
+
       - name: Precache Flutter iOS artifacts
         run: |
           flutter precache --ios
@@ -34,17 +34,14 @@ jobs:
       - name: Decode GoogleService-Info.plist
         run: echo "${{ secrets.GOOGLE_SERVICE_INFO }}" | base64 --decode > ios/Runner/GoogleService-Info.plist
 
-
       - name: Update iOS Deployment Target to 16.0 in Podfile
         run: |
           cd ios
-          # Update iOS deployment target to 16.0 in Podfile
           sed -i '' 's/platform :ios, '\''[0-9]*'\''/platform :ios, '\''16.0'\''/g' Podfile
 
       - name: Install CocoaPods dependencies
         run: |
           cd ios
-          rm -rf Podfile.lock Pods
           pod install --repo-update
 
       - name: Build iOS app
