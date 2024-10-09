@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "600962761680",
+    "project_id": "myk-webrtc",
+    "storage_bucket": "myk-webrtc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600962761680:android:cc270510cc2a2ffe846fd5",
+        "android_client_info": {
+          "package_name": "dev.flutterexplained.webrtc_tutorial"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH3eroR9m3JTXHtlueZW3ZCPjQ92WCjYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
