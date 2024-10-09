@@ -45,7 +45,7 @@ jobs:
 
       - name: Build iOS app
         run: |
-          flutter build ios --release
+          flutter build ios --release --no-codesign
 
       # Upload the iOS build (IPA file) as an artifact
       - name: Upload IPA file
