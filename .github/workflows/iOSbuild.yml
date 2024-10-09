@@ -34,6 +34,9 @@ jobs:
       - name: Decode GoogleService-Info.plist
         run: echo "${{ secrets.GOOGLE_SERVICE_INFO }}" | base64 --decode > ios/Runner/GoogleService-Info.plist
 
+      - name: Check GoogleService-Info.plist
+        run: ls -l ios/Runner  # Check if the file was created successfully
+
       - name: Update iOS Deployment Target to 16.0 in Podfile
         run: |
           cd ios
