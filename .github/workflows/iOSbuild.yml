@@ -31,6 +31,10 @@ jobs:
         run: |
           flutter pub get
 
+      - name: Decode GoogleService-Info.plist
+        run: echo "${{ secrets.GOOGLE_SERVICE_INFO }}" | base64 --decode > ios/Runner/GoogleService-Info.plist
+
+
       - name: Update iOS Deployment Target to 16.0 in Podfile
         run: |
           cd ios
