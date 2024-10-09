@@ -36,7 +36,7 @@ jobs:
       - name: Install CocoaPods dependencies
         run: |
           cd ios
-          pod repo remove trunk
+          rm -rf Podfile.lock Pods
           pod install --repo-update
 
       - name: Build iOS app
