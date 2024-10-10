@@ -32,13 +32,6 @@ jobs:
           cd ios
           sed -i '' 's/platform :ios, '\''[0-9]*'\''/platform :ios, '\''16.0'\''/g' Podfile
 
-      - name: Add Firebase using Swift Package Manager
-        run: |
-          cd ios
-          xcodebuild -resolvePackageDependencies \
-          -package-url https://github.com/firebase/firebase-ios-sdk \
-          -package-name FirebaseAnalytics
-
       - name: Decode GoogleService-Info.plist
         run: echo "${{ secrets.GOOGLE_SERVICE_INFO }}" | base64 --decode > ios/Runner/GoogleService-Info.plist
 
