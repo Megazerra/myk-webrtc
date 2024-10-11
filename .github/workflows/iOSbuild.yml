@@ -19,29 +19,28 @@ jobs:
           git clone https://github.com/flutter/flutter.git -b stable --depth 1
           echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
 
-      - name: Set up CocoaPods
+      - name: Precache Flutter iOS artifacts
         run: |
-          sudo gem install cocoapods
+          flutter precache --ios
 
       - name: Get Flutter dependencies
         run: |
           flutter pub get
 
-      - name: Update iOS Deployment Target to 16.0 in Podfile
+      - name: Update iOS Deployment Target to 16.0
         run: |
           cd ios
-          # Update iOS deployment target to 16.0 in Podfile
           sed -i '' 's/platform :ios, '\''[0-9]*'\''/platform :ios, '\''16.0'\''/g' Podfile
 
-      - name: Install CocoaPods dependencies
-        run: |
-          cd ios
-          pod repo remove trunk
-          pod install --repo-update
+      - name: Decode GoogleService-Info.plist
+        run: echo "${{ secrets.GOOGLE_SERVICE_INFO }}" | base64 --decode > ios/Runner/GoogleService-Info.plist
+
+      - name: Check GoogleService-Info.plist
+        run: ls -l ios/Runner  # Check if the file was created successfully
 
       - name: Build iOS app
         run: |
-          flutter build ios --release
+          flutter build ios --release --no-codesign
 
       # Upload the iOS build (IPA file) as an artifact
       - name: Upload IPA file
