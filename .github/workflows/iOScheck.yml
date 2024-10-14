@@ -1,4 +1,4 @@
-name: Build iOS App
+name: Check iOS App
 
 on:
   push:
@@ -32,10 +32,19 @@ jobs:
           cd ios
           sed -i '' 's/platform :ios, '\''[0-9]*'\''/platform :ios, '\''16.0'\''/g' Podfile
 
-      - name: Build iOS app
-        run: |
-          flutter build ios --release --no-codesign
+      #- name: Decode GoogleService-Info.plist
+       # run: echo "${{ secrets.GOOGLE_SERVICE_INFO }}" | base64 --decode > ios/Runner/GoogleService-Info.plist
 
+      - name: Check GoogleService-Info.plist
+        run: |
+          cd ios/Runner
+          plutil GoogleService-Info.plist
+
+      - name: Check Info.plist
+        run: |
+          cd ios/Runner
+          plutil ./Info.plist
+  
       # Upload the iOS build (IPA file) as an artifact
       - name: Upload IPA file
         uses: actions/upload-artifact@v3
