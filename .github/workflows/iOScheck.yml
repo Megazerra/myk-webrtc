@@ -2,8 +2,8 @@ name: Check iOS App
 
 on:
   push:
-    branches:
-      - main
+    # branches:
+     # - main
   pull_request:
 
 jobs:
@@ -36,7 +36,9 @@ jobs:
         run: echo "${{ secrets.GOOGLE_SERVICE_INFO }}" | base64 --decode > ios/Runner/GoogleService-Info.plist
 
       - name: Check GoogleService-Info.plist
-        run: ls -l ios/Runner  # Check if the file was created successfully
+        run: |
+          cd ios/Runner
+          plutil GoogleService-Info.plist
 
       - name: Check Info.plist
         run: |
