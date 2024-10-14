@@ -1,5 +1,4 @@
-plutil ./Info.plist
-name: Build iOS App
+name: Check iOS App
 
 on:
   push:
