@@ -30,7 +30,6 @@ jobs:
       - name: Update iOS Deployment Target to 16.0
         run: |
           cd ios
-          pod repo remove trunk
           pod deintegrate
           pod install
           sed -i '' 's/platform :ios, '\''[0-9]*'\''/platform :ios, '\''16.0'\''/g' Podfile
